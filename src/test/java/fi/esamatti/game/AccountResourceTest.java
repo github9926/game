@@ -42,7 +42,7 @@ class AccountResourceTest {
 	
 	@Test
 	public void httpsRequired() throws Exception {
-		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/accounts",
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/deposit",
 				String.class)).contains("Bad Request");
 	}
 	
@@ -57,9 +57,9 @@ class AccountResourceTest {
  
         HttpEntity<InputJson> request = new HttpEntity<>(input, headers);
          
-        ResponseEntity<String> result = this.restTemplate.postForEntity(new URI("https://localhost:" + port + "/accounts/deposit"), request, String.class);
+        ResponseEntity<String> result = this.restTemplate.postForEntity(new URI("https://localhost:" + port + "/deposit/"), request, String.class);
+        assertThat(result.getStatusCodeValue()).isEqualTo(200);
         
-        System.out.println("done");
 	}
 	
     RestTemplate restTemplate() throws Exception {
