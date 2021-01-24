@@ -47,7 +47,9 @@ class AccountResourceTest {
 	@Test
 	public void testDeposit() throws Exception {
         InputJson input = new InputJson();
-        input.setId("my-test-id");
+        input.setEventId(0);
+        input.setPlayerId(0);
+        input.setAmount(3);
         
         HttpHeaders headers = new HttpHeaders();
  
