@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import fi.esamatti.game.db.DbApi;
 import fi.esamatti.game.db.Player;
 import fi.esamatti.game.db.PlayerRepository;
 
@@ -43,5 +44,9 @@ public class GameApplication {
 			});
 		};
 	}
-
+	
+	@Bean
+	public DbApi dbApi(PlayerRepository repository) {
+		return new DbApi(repository);
+	}
 }
