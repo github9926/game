@@ -1,4 +1,4 @@
-package fi.esamatti.game.db;
+package fi.esamatti.game.db.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

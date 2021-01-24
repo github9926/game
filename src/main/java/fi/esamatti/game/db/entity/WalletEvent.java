@@ -1,4 +1,4 @@
-package fi.esamatti.game.db;
+package fi.esamatti.game.db.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -31,7 +31,7 @@ public class WalletEvent {
 		this.amount = amount;
 	}
 
-	protected WalletEvent() {
+	public WalletEvent() {
 	}
 
 	public Long getPlayerId() {

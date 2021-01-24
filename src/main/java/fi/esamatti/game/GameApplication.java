@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 
 import fi.esamatti.game.db.DbApi;
 import fi.esamatti.game.db.WalletEventRepository;
-import fi.esamatti.game.db.Player;
+import fi.esamatti.game.db.entity.Player;
 import fi.esamatti.game.db.PlayerRepository;
 
 @SpringBootApplication

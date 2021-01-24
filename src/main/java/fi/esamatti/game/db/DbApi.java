@@ -3,6 +3,8 @@ package fi.esamatti.game.db;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import fi.esamatti.game.db.entity.Player;
+import fi.esamatti.game.db.entity.WalletEvent;
 import fi.esamatti.game.rest.InputJson;
 import fi.esamatti.game.rest.OutputJson;
 
