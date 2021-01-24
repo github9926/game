@@ -15,12 +15,12 @@ import fi.esamatti.game.db.PlayerRepository;
 public class GameApplication {
 	private static final Logger LOGGER = LoggerFactory.getLogger(GameApplication.class);
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		SpringApplication.run(GameApplication.class, args);
 	}
 
 	@Bean
-	public CommandLineRunner demo(PlayerRepository repository) {
+	public CommandLineRunner demo(final PlayerRepository repository) {
 		return (args) -> {
 			final String lastName = "Last1";
 			repository.save(new Player("First1", lastName));
@@ -28,12 +28,12 @@ public class GameApplication {
 			repository.save(new Player("First3", lastName));
 
 			LOGGER.info("Customers:");
-			for (Player customer : repository.findAll()) {
+			for (final Player customer : repository.findAll()) {
 				LOGGER.info(customer.toString());
 			}
 			LOGGER.info("");
 
-			Player customer = repository.findById(1L);
+			final Player customer = repository.findById(1L);
 			LOGGER.info("Customer with ID 1L");
 			LOGGER.info(customer.toString());
 			LOGGER.info("");
@@ -44,9 +44,9 @@ public class GameApplication {
 			});
 		};
 	}
-	
+
 	@Bean
-	public DbApi dbApi(PlayerRepository repository) {
+	public DbApi dbApi(final PlayerRepository repository) {
 		return new DbApi(repository);
 	}
 }

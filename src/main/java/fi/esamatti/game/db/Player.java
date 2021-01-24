@@ -9,23 +9,22 @@ import javax.persistence.Id;
 public class Player {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String firstName;
 	private String lastName;
 
-	protected Player() {}
+	protected Player() {
+	}
 
-	public Player(String firstName, String lastName) {
+	public Player(final String firstName, final String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
 
 	@Override
 	public String toString() {
-		return String.format(
-				"Player(id:%d, firstName:'%s', lastName:'%s']",
-				id, firstName, lastName);
+		return String.format("Player(id:%d, firstName:'%s', lastName:'%s']", id, firstName, lastName);
 	}
 
 	public Long getId() {

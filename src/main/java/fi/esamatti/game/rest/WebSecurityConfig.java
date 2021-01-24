@@ -14,25 +14,18 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http
-			.csrf().disable()
-			.authorizeRequests().antMatchers(HttpMethod.POST, "/deposit", "/deposit/").permitAll().and()
-			.authorizeRequests().anyRequest().denyAll();
-			
+	protected void configure(final HttpSecurity http) throws Exception {
+		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, "/deposit", "/deposit/").permitAll()
+				.and().authorizeRequests().anyRequest().denyAll();
 	}
 
 	/*
-	@Bean
-	@Override
-	public UserDetailsService userDetailsService() {
-		UserDetails user =
-			 User.withDefaultPasswordEncoder()
-				.username("user")
-				.password("password")
-				.roles("USER")
-				.build();
-
-		return new InMemoryUserDetailsManager(user);
-	}*/
+	 * @Bean
+	 *
+	 * @Override public UserDetailsService userDetailsService() { UserDetails user =
+	 * User.withDefaultPasswordEncoder() .username("user") .password("password")
+	 * .roles("USER") .build();
+	 *
+	 * return new InMemoryUserDetailsManager(user); }
+	 */
 }

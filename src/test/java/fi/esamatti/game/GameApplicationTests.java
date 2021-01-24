@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import fi.esamatti.game.db.Player;
 import fi.esamatti.game.db.PlayerRepository;
+
 //import org.springframework.boot.test.context.SpringBootTest;
 //@SpringBootTest
 @DataJpaTest
@@ -24,10 +25,10 @@ class GameApplicationTests {
 
 	@Test
 	public void testFindByLastName() {
-		Player player = new Player("first", "last");
+		final Player player = new Player("first", "last");
 		entityManager.persist(player);
 
-		List<Player> findByLastName = players.findByLastName(player.getLastName());
+		final List<Player> findByLastName = players.findByLastName(player.getLastName());
 
 		assertThat(findByLastName).extracting(Player::getLastName).containsOnly(player.getLastName());
 	}
