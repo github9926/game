@@ -4,6 +4,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import fi.esamatti.game.rest.InputJson;
+import fi.esamatti.game.rest.OutputJson;
 
 public class DbApi {
 
@@ -14,10 +15,16 @@ public class DbApi {
 	}
 
 	@Transactional(isolation = Isolation.REPEATABLE_READ)
-	public void deposit(final InputJson event) {
-		// Player player = playerRepository.findById(event.getPlayerId());
-		// TODO Auto-generated method stub
+	public OutputJson deposit(final InputJson event) {
+		final Player player = playerRepository.findById(event.getPlayerId());
+		final long newBalance = player.getBalance() + event.getAmount();
 
+		player.setBalance(newBalance);
+		playerRepository.save(player);
+
+		final OutputJson outputJson = new OutputJson();
+		outputJson.setBalance(newBalance);
+		return outputJson;
 	}
 
 }

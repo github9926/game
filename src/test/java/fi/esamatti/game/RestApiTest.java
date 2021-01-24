@@ -26,6 +26,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.client.RestTemplate;
 
 import fi.esamatti.game.rest.InputJson;
+import fi.esamatti.game.rest.OutputJson;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:test-application.properties")
@@ -49,18 +50,24 @@ class RestApiTest {
 
 	@Test
 	public void testDeposit() throws Exception {
+		final long amount = 3L;
+
 		final InputJson input = new InputJson();
 		input.setEventId(0);
-		input.setPlayerId(0);
-		input.setAmount(3);
+		input.setPlayerId(1L);
+		input.setAmount(amount);
 
 		final HttpHeaders headers = new HttpHeaders();
 
 		final HttpEntity<InputJson> request = new HttpEntity<>(input, headers);
 
-		final ResponseEntity<String> result = restTemplate
-				.postForEntity(new URI("https://localhost:" + port + "/deposit/"), request, String.class);
-		assertThat(result.getStatusCodeValue()).isEqualTo(200);
+		final ResponseEntity<OutputJson> response = restTemplate
+				.postForEntity(new URI("https://localhost:" + port + "/deposit/"), request, OutputJson.class);
+		assertThat(response.getStatusCodeValue()).isEqualTo(200);
+
+		final long balance = response.getBody().getBalance();
+		assertThat(balance).isEqualTo(amount);
+
 	}
 
 	RestTemplate restTemplate() throws Exception {

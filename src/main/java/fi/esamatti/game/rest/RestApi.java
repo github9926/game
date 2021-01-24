@@ -3,6 +3,7 @@ package fi.esamatti.game.rest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,10 @@ public class RestApi {
 
 	@Path("/deposit")
 	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
 	@POST
-	public String deposit(final InputJson event) {
-		dbApi.deposit(event);
-		return "json";
+	public OutputJson deposit(final InputJson event) {
+		final OutputJson output = dbApi.deposit(event);
+		return output;
 	}
 }

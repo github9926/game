@@ -13,6 +13,7 @@ public class Player {
 	private Long id;
 	private String firstName;
 	private String lastName;
+	private Long balance;
 
 	protected Player() {
 	}
@@ -20,11 +21,13 @@ public class Player {
 	public Player(final String firstName, final String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
+		balance = 0L;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("Player(id:%d, firstName:'%s', lastName:'%s']", id, firstName, lastName);
+		return String.format("Player(id:%d, firstName:'%s', lastName:'%s', balance:'%s']", id, firstName, lastName,
+				balance);
 	}
 
 	public Long getId() {
@@ -37,5 +40,21 @@ public class Player {
 
 	public String getLastName() {
 		return lastName;
+	}
+
+	public long getBalance() {
+		return balance;
+	}
+
+	public void setBalance(final long balance) {
+		this.balance = balance;
+	}
+
+	public void setFirstName(final String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setLastName(final String lastName) {
+		this.lastName = lastName;
 	}
 }
