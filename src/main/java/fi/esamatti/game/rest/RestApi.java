@@ -26,4 +26,13 @@ public class RestApi {
 		final OutputJson output = dbApi.deposit(event);
 		return output;
 	}
+
+	@Path("/buy")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
+	@POST
+	public OutputJson buy(final InputJson event) {
+		final OutputJson output = dbApi.buy(event);
+		return output;
+	}
 }

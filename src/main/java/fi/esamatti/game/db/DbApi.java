@@ -44,4 +44,30 @@ public class DbApi {
 		return outputJson;
 	}
 
+	@Transactional(isolation = Isolation.REPEATABLE_READ)
+	public OutputJson buy(final InputJson inputJson) {
+		final WalletEvent existingEvent = eventRepository.findById(inputJson.getEventId());
+		final Player player = playerRepository.findById(inputJson.getPlayerId());
+		final long oldBalance = player.getBalance();
+
+		final OutputJson outputJson = new OutputJson();
+		if (existingEvent == null) {
+			final long newBalance = oldBalance - inputJson.getAmount();
+			player.setBalance(newBalance);
+			playerRepository.save(player);
+			outputJson.setBalance(newBalance);
+
+			final WalletEvent walletEvent = new WalletEvent();
+			walletEvent.setId(inputJson.getEventId());
+			walletEvent.setEventType(WalletEvent.WalletEventType.Buy);
+			walletEvent.setPlayerId(inputJson.getPlayerId());
+			walletEvent.setAmount(inputJson.getAmount());
+			eventRepository.save(walletEvent);
+		} else {
+			outputJson.setBalance(oldBalance);
+		}
+
+		return outputJson;
+	}
+
 }

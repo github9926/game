@@ -15,8 +15,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, "/deposit", "/deposit/").permitAll()
-				.and().authorizeRequests().anyRequest().denyAll();
+		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, "/deposit", "/deposit/", "/buy", "/buy/")
+				.permitAll().and().authorizeRequests().anyRequest().denyAll();
 	}
 
 	/*

@@ -49,18 +49,21 @@ class RestApiTest {
 	}
 
 	@Test
-	public void testDeposit() throws Exception {
+	public void testDepositAndBuy() throws Exception {
+		final long playerId = 1L;
+		final long depositEventId = 1L;
 		final long amount = 3L;
 
-		final InputJson input = new InputJson();
-		input.setEventId(0);
-		input.setPlayerId(1L);
-		input.setAmount(amount);
+		final InputJson depositInput = new InputJson();
+		depositInput.setEventId(depositEventId);
+		depositInput.setPlayerId(playerId);
+		depositInput.setAmount(amount);
 
 		final HttpHeaders headers = new HttpHeaders();
 
-		final HttpEntity<InputJson> request = new HttpEntity<>(input, headers);
+		final HttpEntity<InputJson> request = new HttpEntity<>(depositInput, headers);
 
+		// Deposit money
 		final String urlString = "https://localhost:" + port + "/deposit/";
 		final URI uri = new URI(urlString);
 		final ResponseEntity<OutputJson> firstResponse = restTemplate.postForEntity(uri, request, OutputJson.class);
@@ -69,12 +72,25 @@ class RestApiTest {
 		final long firstBalance = firstResponse.getBody().getBalance();
 		assertThat(firstBalance).isEqualTo(amount);
 
+		// Send same deposition event second time, and verify the balance doesn't change
 		final ResponseEntity<OutputJson> secondResponse = restTemplate.postForEntity(uri, request, OutputJson.class);
 		assertThat(secondResponse.getStatusCodeValue()).isEqualTo(200);
 
 		final long secondBalance = secondResponse.getBody().getBalance();
 		assertThat(secondBalance).isEqualTo(amount);
 
+		// Buy a game
+		final URI buyUri = new URI("https://localhost:" + port + "/buy/");
+		final InputJson buyInput = new InputJson();
+		buyInput.setEventId(depositEventId + 1L);
+		buyInput.setPlayerId(playerId);
+		buyInput.setAmount(amount);
+		final HttpEntity<InputJson> buyRequest = new HttpEntity<>(buyInput, headers);
+		final ResponseEntity<OutputJson> buyResponse = restTemplate.postForEntity(buyUri, buyRequest, OutputJson.class);
+		assertThat(buyResponse.getStatusCodeValue()).isEqualTo(200);
+
+		final long buyBalance = buyResponse.getBody().getBalance();
+		assertThat(buyBalance).isEqualTo(0L);
 	}
 
 	RestTemplate restTemplate() throws Exception {
