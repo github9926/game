@@ -61,12 +61,19 @@ class RestApiTest {
 
 		final HttpEntity<InputJson> request = new HttpEntity<>(input, headers);
 
-		final ResponseEntity<OutputJson> response = restTemplate
-				.postForEntity(new URI("https://localhost:" + port + "/deposit/"), request, OutputJson.class);
-		assertThat(response.getStatusCodeValue()).isEqualTo(200);
+		final String urlString = "https://localhost:" + port + "/deposit/";
+		final URI uri = new URI(urlString);
+		final ResponseEntity<OutputJson> firstResponse = restTemplate.postForEntity(uri, request, OutputJson.class);
+		assertThat(firstResponse.getStatusCodeValue()).isEqualTo(200);
 
-		final long balance = response.getBody().getBalance();
-		assertThat(balance).isEqualTo(amount);
+		final long firstBalance = firstResponse.getBody().getBalance();
+		assertThat(firstBalance).isEqualTo(amount);
+
+		final ResponseEntity<OutputJson> secondResponse = restTemplate.postForEntity(uri, request, OutputJson.class);
+		assertThat(secondResponse.getStatusCodeValue()).isEqualTo(200);
+
+		final long secondBalance = secondResponse.getBody().getBalance();
+		assertThat(secondBalance).isEqualTo(amount);
 
 	}
 

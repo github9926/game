@@ -9,21 +9,36 @@ import fi.esamatti.game.rest.OutputJson;
 public class DbApi {
 
 	private final PlayerRepository playerRepository;
+	private final WalletEventRepository eventRepository;
 
-	public DbApi(final PlayerRepository repository) {
+	public DbApi(final PlayerRepository repository, final WalletEventRepository eventRepository) {
 		playerRepository = repository;
+		this.eventRepository = eventRepository;
 	}
 
 	@Transactional(isolation = Isolation.REPEATABLE_READ)
-	public OutputJson deposit(final InputJson event) {
-		final Player player = playerRepository.findById(event.getPlayerId());
-		final long newBalance = player.getBalance() + event.getAmount();
-
-		player.setBalance(newBalance);
-		playerRepository.save(player);
+	public OutputJson deposit(final InputJson inputJson) {
+		final WalletEvent existingEvent = eventRepository.findById(inputJson.getEventId());
+		final Player player = playerRepository.findById(inputJson.getPlayerId());
+		final long oldBalance = player.getBalance();
 
 		final OutputJson outputJson = new OutputJson();
-		outputJson.setBalance(newBalance);
+		if (existingEvent == null) {
+			final long newBalance = oldBalance + inputJson.getAmount();
+			player.setBalance(newBalance);
+			playerRepository.save(player);
+			outputJson.setBalance(newBalance);
+
+			final WalletEvent walletEvent = new WalletEvent();
+			walletEvent.setId(inputJson.getEventId());
+			walletEvent.setEventType(WalletEvent.WalletEventType.Deposit);
+			walletEvent.setPlayerId(inputJson.getPlayerId());
+			walletEvent.setAmount(inputJson.getAmount());
+			eventRepository.save(walletEvent);
+		} else {
+			outputJson.setBalance(oldBalance);
+		}
+
 		return outputJson;
 	}
 
