@@ -39,12 +39,6 @@ class AccountResourceTest {
     private String trustStorePassword;
 	
 	@Test
-	public void firstRestTest() throws Exception {
-		assertThat(this.restTemplate.getForObject("https://localhost:" + port + "/accounts",
-				String.class)).contains("Player count: 3");
-	}
-	
-	@Test
 	public void httpsRequired() throws Exception {
 		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/accounts",
 				String.class)).contains("Bad Request");
