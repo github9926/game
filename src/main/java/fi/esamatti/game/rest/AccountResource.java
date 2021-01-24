@@ -1,4 +1,4 @@
-package fi.esamatti.game;
+package fi.esamatti.game.rest;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;

@@ -24,6 +24,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.client.RestTemplate;
+
+import fi.esamatti.game.rest.InputJson;
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations="classpath:test-application.properties")
 class AccountResourceTest {

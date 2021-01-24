@@ -1,4 +1,4 @@
-package fi.esamatti.game;
+package fi.esamatti.game.rest;
 
 public class InputJson {
 

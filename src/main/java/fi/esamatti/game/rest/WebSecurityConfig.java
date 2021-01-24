@@ -1,4 +1,4 @@
-package fi.esamatti.game;
+package fi.esamatti.game.rest;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

@@ -1,4 +1,4 @@
-package fi.esamatti.game;
+package fi.esamatti.game.rest;
 
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.context.annotation.Configuration;
