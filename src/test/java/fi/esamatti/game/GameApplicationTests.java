@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+
+import fi.esamatti.game.db.Player;
+import fi.esamatti.game.db.PlayerRepository;
 //import org.springframework.boot.test.context.SpringBootTest;
 //@SpringBootTest
 @DataJpaTest

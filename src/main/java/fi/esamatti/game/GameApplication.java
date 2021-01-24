@@ -7,6 +7,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import fi.esamatti.game.db.Player;
+import fi.esamatti.game.db.PlayerRepository;
+
 @SpringBootApplication
 public class GameApplication {
 	private static final Logger LOGGER = LoggerFactory.getLogger(GameApplication.class);
