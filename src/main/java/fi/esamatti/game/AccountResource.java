@@ -1,7 +1,10 @@
 package fi.esamatti.game;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,4 +25,14 @@ public class AccountResource {
     	
 		return "Player count: " + playerCount;
     }
+    
+    @Path("/deposit")
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @POST
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    public String deposit(InputJson json) {
+		return "json";    
+    }
 }
+
+
