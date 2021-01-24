@@ -28,7 +28,7 @@ import org.springframework.web.client.RestTemplate;
 import fi.esamatti.game.rest.InputJson;
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations="classpath:test-application.properties")
-class AccountResourceTest {
+class RestApiTest {
 	@LocalServerPort
 	private int port;
 	@Autowired
