@@ -41,10 +41,14 @@ See api.raml for more information about the rest end-points.
 
 # Things that might make this demo better
 
-	* Stand-alone database (instead of memory-only db started with the app
+	* Timestamps for payment and deposition events 
+		* https://www.baeldung.com/jpa-java-time
+	* Stand-alone database (instead of memory-only db started with the app)
+		* https://spring.io/guides/gs/accessing-data-mysql/
 	* Db setup scripts (instead of Hibernate auto-generated db tables)
 	* Docker compose setup for running the app, db and maybe some testing tools in containers
+		* https://docs.microsoft.com/en-us/visualstudio/docker/tutorials/use-docker-compose
 	* Better error handling
-	* More automated tests
+	* More unit and integration tests
 	
 Thanks for reading! :)
