@@ -15,21 +15,25 @@ or alternatively (for Docker)
 
 2. Use curl (or similar) to test the rest-api.
 
-	E.g. (in Windows command prompt):
+E.g. (in Windows command prompt):
 	
-	* Deposit 10 (euros, cents, or some imaginary currency)
+Deposit 10 (euros, cents, or some imaginary currency)
+	
 	curl --header "Content-Type: application/json" --request POST --data "{\"eventId\":1,\"playerId\":1,\"amount\":10}" https://localhost:8080/deposit -k
 	=> {"balance":10}
 	
-	* Repeat same event again, and check that balance is unchanged
+Repeat same event again, and check that balance is unchanged
+	
 	curl --header "Content-Type: application/json" --request POST --data "{\"eventId\":1,\"playerId\":1,\"amount\":10}" https://localhost:8080/deposit -k 
 	=> {"balance":10}
 
-	* Buy a game for 5 currency units
+Buy a game for 5 currency units
+	
 	curl --header "Content-Type: application/json" --request POST --data "{\"eventId\":2,\"playerId\":1,\"amount\":5}" https://localhost:8080/buy -k
 	=> {"balance":5}
 	
-	* Try to buy a game for 10 currency units
+Try to buy a game for 10 currency units
+	
 	curl --header "Content-Type: application/json" --request POST --data "{\"eventId\":3,\"playerId\":1,\"amount\":10}" https://localhost:8080/buy -k
 	=> Insufficient funds! Account only has 5, but tried to buy 10
 	
