@@ -21,41 +21,26 @@ public class DbApi {
 
 	@Transactional(isolation = Isolation.REPEATABLE_READ)
 	public OutputJson deposit(final InputJson inputJson) {
-		final WalletEvent existingEvent = eventRepository.findById(inputJson.getEventId());
-		final Player player = playerRepository.findById(inputJson.getPlayerId());
-		final long oldBalance = player.getBalance();
-
-		final OutputJson outputJson = new OutputJson();
-		if (existingEvent == null) {
-			final long newBalance = oldBalance + inputJson.getAmount();
-			player.setBalance(newBalance);
-			playerRepository.save(player);
-			outputJson.setBalance(newBalance);
-
-			final WalletEvent walletEvent = new WalletEvent();
-			walletEvent.setId(inputJson.getEventId());
-			walletEvent.setEventType(WalletEvent.WalletEventType.Deposit);
-			walletEvent.setPlayerId(inputJson.getPlayerId());
-			walletEvent.setAmount(inputJson.getAmount());
-			eventRepository.save(walletEvent);
-		} else {
-			outputJson.setBalance(oldBalance);
-		}
-
-		return outputJson;
+		return updateAccount(inputJson, WalletEvent.WalletEventType.Deposit);
 	}
 
 	@Transactional(isolation = Isolation.REPEATABLE_READ)
 	public OutputJson buy(final InputJson inputJson) {
+		return updateAccount(inputJson, WalletEvent.WalletEventType.Buy);
+	}
+
+	private OutputJson updateAccount(final InputJson inputJson, final WalletEvent.WalletEventType eventType) {
 		final WalletEvent existingEvent = eventRepository.findById(inputJson.getEventId());
 		final Player player = playerRepository.findById(inputJson.getPlayerId());
 		final long oldBalance = player.getBalance();
 
 		final OutputJson outputJson = new OutputJson();
 		if (existingEvent == null) {
-			final long newBalance = oldBalance - inputJson.getAmount();
+			final long amount = inputJson.getAmount();
+			final long changeAmount = eventType == WalletEvent.WalletEventType.Buy ? -amount : amount;
+			final long newBalance = oldBalance + changeAmount;
 			if (newBalance < 0L) {
-				throw new InsufficientFundsException(oldBalance, inputJson.getAmount());
+				throw new InsufficientFundsException(oldBalance, amount);
 			}
 			player.setBalance(newBalance);
 			playerRepository.save(player);
@@ -65,7 +50,7 @@ public class DbApi {
 			walletEvent.setId(inputJson.getEventId());
 			walletEvent.setEventType(WalletEvent.WalletEventType.Buy);
 			walletEvent.setPlayerId(inputJson.getPlayerId());
-			walletEvent.setAmount(inputJson.getAmount());
+			walletEvent.setAmount(amount);
 			eventRepository.save(walletEvent);
 		} else {
 			outputJson.setBalance(oldBalance);
