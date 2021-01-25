@@ -5,6 +5,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,17 +23,21 @@ public class RestApi {
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
 	@POST
-	public OutputJson deposit(final InputJson event) {
+	public Response deposit(final InputJson event) {
 		final OutputJson output = dbApi.deposit(event);
-		return output;
+		return Response.status(Response.Status.OK).entity(output).build();
 	}
 
 	@Path("/buy")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
 	@POST
-	public OutputJson buy(final InputJson event) {
-		final OutputJson output = dbApi.buy(event);
-		return output;
+	public Response buy(final InputJson event) {
+		try {
+			final OutputJson output = dbApi.buy(event);
+			return Response.status(Response.Status.OK).entity(output).build();
+		} catch (final InsufficientFundsException e) {
+			return Response.status(Response.Status.CONFLICT).entity(e.getMessage()).build();
+		}
 	}
 }

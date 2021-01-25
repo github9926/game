@@ -6,6 +6,7 @@ import java.net.URI;
 
 import javax.net.ssl.SSLContext;
 
+import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.HttpClients;
@@ -91,6 +92,25 @@ class RestApiTest {
 
 		final long buyBalance = buyResponse.getBody().getBalance();
 		assertThat(buyBalance).isEqualTo(0L);
+	}
+
+	@Test
+	public void testBalanceCanNotGoNegative() throws Exception {
+		final long playerId = 2L;
+		final long eventId = 3L;
+		final long amount = 1L;
+
+		final HttpHeaders headers = new HttpHeaders();
+
+		final URI buyUri = new URI("https://localhost:" + port + "/buy/");
+		final InputJson buyInput = new InputJson();
+		buyInput.setEventId(eventId);
+		buyInput.setPlayerId(playerId);
+		buyInput.setAmount(amount);
+		final HttpEntity<InputJson> buyRequest = new HttpEntity<>(buyInput, headers);
+		final ResponseEntity<String> buyResponse = restTemplate.postForEntity(buyUri, buyRequest, String.class);
+		assertThat(buyResponse.getStatusCodeValue()).isEqualTo(HttpStatus.SC_CONFLICT);
+		assertThat(buyResponse.getBody()).contains("Insufficient funds");
 	}
 
 	RestTemplate restTemplate() throws Exception {

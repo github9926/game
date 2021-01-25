@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import fi.esamatti.game.db.entity.Player;
 import fi.esamatti.game.db.entity.WalletEvent;
 import fi.esamatti.game.rest.InputJson;
+import fi.esamatti.game.rest.InsufficientFundsException;
 import fi.esamatti.game.rest.OutputJson;
 
 public class DbApi {
@@ -53,6 +54,9 @@ public class DbApi {
 		final OutputJson outputJson = new OutputJson();
 		if (existingEvent == null) {
 			final long newBalance = oldBalance - inputJson.getAmount();
+			if (newBalance < 0L) {
+				throw new InsufficientFundsException(oldBalance, inputJson.getAmount());
+			}
 			player.setBalance(newBalance);
 			playerRepository.save(player);
 			outputJson.setBalance(newBalance);
