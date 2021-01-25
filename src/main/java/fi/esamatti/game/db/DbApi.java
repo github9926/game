@@ -5,9 +5,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fi.esamatti.game.db.entity.Player;
 import fi.esamatti.game.db.entity.WalletEvent;
-import fi.esamatti.game.rest.InputJson;
 import fi.esamatti.game.rest.InsufficientFundsException;
-import fi.esamatti.game.rest.OutputJson;
+import fi.esamatti.game.rest.json.InputJson;
+import fi.esamatti.game.rest.json.OutputJson;
 
 public class DbApi {
 

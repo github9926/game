@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fi.esamatti.game.db.DbApi;
+import fi.esamatti.game.rest.json.InputJson;
+import fi.esamatti.game.rest.json.OutputJson;
 
 @Path("/")
 @Service

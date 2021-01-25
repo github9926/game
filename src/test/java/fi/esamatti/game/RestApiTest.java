@@ -26,8 +26,8 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.client.RestTemplate;
 
-import fi.esamatti.game.rest.InputJson;
-import fi.esamatti.game.rest.OutputJson;
+import fi.esamatti.game.rest.json.InputJson;
+import fi.esamatti.game.rest.json.OutputJson;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:test-application.properties")
