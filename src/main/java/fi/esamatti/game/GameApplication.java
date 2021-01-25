@@ -8,9 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import fi.esamatti.game.db.DbApi;
+import fi.esamatti.game.db.PlayerRepository;
 import fi.esamatti.game.db.WalletEventRepository;
 import fi.esamatti.game.db.entity.Player;
-import fi.esamatti.game.db.PlayerRepository;
 
 @SpringBootApplication
 public class GameApplication {
@@ -23,26 +23,11 @@ public class GameApplication {
 	@Bean
 	public CommandLineRunner demo(final PlayerRepository repository) {
 		return (args) -> {
-			final String lastName = "Last1";
-			repository.save(new Player("First1", lastName));
+			// Generate some test data for this demo
+			repository.save(new Player("First1", "Last1"));
 			repository.save(new Player("First2", "Last2"));
-			repository.save(new Player("First3", lastName));
-
-			LOGGER.info("Customers:");
-			for (final Player customer : repository.findAll()) {
-				LOGGER.info(customer.toString());
-			}
-			LOGGER.info("");
-
-			final Player customer = repository.findById(1L);
-			LOGGER.info("Customer with ID 1L");
-			LOGGER.info(customer.toString());
-			LOGGER.info("");
-
-			LOGGER.info("Customer with findByLastName " + lastName);
-			repository.findByLastName(lastName).forEach(player -> {
-				LOGGER.info(player.toString());
-			});
+			repository.save(new Player("First3", "Last3"));
+			LOGGER.info("Saved three players to the database");
 		};
 	}
 
