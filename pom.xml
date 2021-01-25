@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>fi.esa</groupId>
-	<artifactId>game</artifactId>
+	<artifactId>wallet</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>game</name>
-	<description>Game engine demo</description>
+	<name>wallet</name>
+	<description>Wallet demo</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
