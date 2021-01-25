@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fi.esamatti.game.db.entity.Player;
 import fi.esamatti.game.db.entity.WalletEvent;
+import fi.esamatti.game.db.entity.WalletEventType;
 import fi.esamatti.game.rest.InsufficientFundsException;
 import fi.esamatti.game.rest.json.InputJson;
 import fi.esamatti.game.rest.json.OutputJson;
@@ -21,15 +22,15 @@ public class DbApi {
 
 	@Transactional(isolation = Isolation.REPEATABLE_READ)
 	public OutputJson deposit(final InputJson inputJson) {
-		return updateAccount(inputJson, WalletEvent.WalletEventType.Deposit);
+		return updateAccount(inputJson, WalletEventType.Deposit);
 	}
 
 	@Transactional(isolation = Isolation.REPEATABLE_READ)
 	public OutputJson buy(final InputJson inputJson) {
-		return updateAccount(inputJson, WalletEvent.WalletEventType.Buy);
+		return updateAccount(inputJson, WalletEventType.Buy);
 	}
 
-	private OutputJson updateAccount(final InputJson inputJson, final WalletEvent.WalletEventType eventType) {
+	private OutputJson updateAccount(final InputJson inputJson, final WalletEventType eventType) {
 		final WalletEvent existingEvent = eventRepository.findById(inputJson.getEventId());
 		final Player player = playerRepository.findById(inputJson.getPlayerId());
 		final long oldBalance = player.getBalance();
@@ -37,7 +38,7 @@ public class DbApi {
 		final OutputJson outputJson = new OutputJson();
 		if (existingEvent == null) {
 			final long amount = inputJson.getAmount();
-			final long changeAmount = eventType == WalletEvent.WalletEventType.Buy ? -amount : amount;
+			final long changeAmount = eventType == WalletEventType.Buy ? -amount : amount;
 			final long newBalance = oldBalance + changeAmount;
 			if (newBalance < 0L) {
 				throw new InsufficientFundsException(oldBalance, amount);
@@ -48,7 +49,7 @@ public class DbApi {
 
 			final WalletEvent walletEvent = new WalletEvent();
 			walletEvent.setId(inputJson.getEventId());
-			walletEvent.setEventType(WalletEvent.WalletEventType.Buy);
+			walletEvent.setEventType(WalletEventType.Buy);
 			walletEvent.setPlayerId(inputJson.getPlayerId());
 			walletEvent.setAmount(amount);
 			eventRepository.save(walletEvent);

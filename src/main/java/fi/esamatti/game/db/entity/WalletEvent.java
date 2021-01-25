@@ -7,10 +7,6 @@ import javax.persistence.Id;
 
 @Entity
 public class WalletEvent {
-	public enum WalletEventType {
-		Deposit, Buy;
-	}
-
 	@Id
 	private Long id;
 
