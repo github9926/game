@@ -1,0 +1,26 @@
+/deposit:
+  description: Deposit money to account (maybe after a won game)
+  post:
+    body:
+      application/json:
+        example: {"eventId":60,"playerId":1,"amount":100}
+    responses:
+      200:
+        body:
+          application/json:
+            example: {"balance":10}
+/buy:
+  description: Buy a game
+  post:
+    body:
+      application/json:
+        example: {"eventId":70,"playerId":2,"amount":50}
+    responses:
+      200:
+        body:
+          application/json:
+            example: {"balance":10}
+      409:
+      	body:
+      	  text/html:
+            example: Insufficient funds! Account only has 5, but tried to buy 10

@@ -26,6 +26,8 @@ Wallet demo
 	curl --header "Content-Type: application/json" --request POST --data "{\"eventId\":3,\"playerId\":1,\"amount\":10}" https://localhost:8080/buy -k
 	=> Insufficient funds! Account only has 5, but tried to buy 10
 	
+See api.raml for more information about the rest end-points.
+
 # Things that might make this demo better
 
 	* Stand-alone database (instead of memory-only db started with the app
