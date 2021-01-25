@@ -2,9 +2,16 @@
 Wallet demo
 
 # How to test
-1. Start wallet server by running
+1. Start wallet server (https://localhost:8080)
+
+Run 
 
 	mvnw spring-boot:run
+
+or alternatively (for Docker)
+
+	docker build -t demo .
+	docker run -p 8080:8080 demo 
 
 2. Use curl (or similar) to test the rest-api.
 
