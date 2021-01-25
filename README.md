@@ -39,6 +39,8 @@ Try to buy a game for 10 currency units
 	
 See api.raml for more information about the rest end-points.
 
+Please note that there are only three valid player IDs: 1, 2, and 3!!
+
 # Things that might make this demo better
 
 	* Timestamps for payment and deposition events 
@@ -48,7 +50,7 @@ See api.raml for more information about the rest end-points.
 	* Db setup scripts (instead of Hibernate auto-generated db tables)
 	* Docker compose setup for running the app, db and maybe some testing tools in containers
 		* https://docs.microsoft.com/en-us/visualstudio/docker/tutorials/use-docker-compose
-	* Better error handling
+	* Better error handling. E.g. use of a playerId outside of range [1,3] causes internal server error 
 	* More unit and integration tests
 	
 Thanks for reading! :)
